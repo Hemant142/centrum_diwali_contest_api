@@ -9,16 +9,18 @@ userRouter.use(express.json());
 
 // POST request to create a new user
 userRouter.post("/adduser", async (req, res) => {
-  const { name, email, phone, instagram, score } = req.body;
-
-  try {
-    const newUser = new UserModel({ name, email, phone, instagram, score });
-    await newUser.save();
-    res.status(201).json({ message: "User created successfully!", user: newUser });
-  } catch (error) {
-    res.status(500).json({ message: "Error creating user", error: error.message });
-  }
-});
+    const { name, email, phone, instagram, score } = req.body;
+  
+    try {
+      const newUser = new UserModel({ name, email, phone, instagram, score });
+      await newUser.save();
+      res.status(201).json({ message: "User created successfully!", user: newUser });
+    } catch (error) {
+      console.error("Error creating user:", error); // More detailed error logging
+      res.status(500).json({ message: "Error creating user", error: error.message });
+    }
+  });
+  
 
 // GET request to check if an email exists
 userRouter.get("/check-email", async (req, res) => {
